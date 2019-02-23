@@ -9,7 +9,7 @@
 				<div class="m-stack__item m-stack__item--fluid">
 					<div class="m-login__wrapper">
 						<div class="m-login__logo">
-							<a href="#">
+							<a href="javascript:;">
 								<img src="public/app/media/img/logos/logo-2.png">
 							</a>
 						</div>
@@ -17,9 +17,9 @@
 							<div class="m-login__head">
 								<h3 class="m-login__title">Welcome to Our Distribution</h3>
 							</div>
-							<form class="m-login__form m-form">
+							<form class="m-login__form m-form" action="<?php echo base_url() . $this->uri->uri_string(); ?>" method="post">
 								<div class="form-group m-form__group">
-									<input class="form-control m-input" type="text" placeholder="Username" name="username" autocomplete="off">
+									<input class="form-control m-input" type="text" placeholder="Username or Email" name="username" autocomplete="off">
 								</div>
 								<div class="form-group m-form__group">
 									<input class="form-control m-input m-login__form-input--last" type="password" placeholder="Password" name="password">
@@ -36,7 +36,7 @@
 									</div>
 								</div>
 								<div class="m-login__form-action">
-									<button class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air" type="button">Sign In</button>
+									<button class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air" type="submit">Sign In</button>
 								</div>
 							</form>
 						</div>
@@ -63,6 +63,22 @@
 	</div>
 </div>
 <!-- END:: Page -->
+<script>
+	$(document).ready(function() {
 
+	});
+
+	$(document).keypress(function(e) {
+		if(e.which == 13) {
+			e.preventDefault();
+		}
+	});
+
+	$("input[name='password']").keypress(function(e) {
+		if(e.which == 13) {
+			$("form").submit();
+		}
+	});
+</script>
 </body>
 <!-- END:: Body -->

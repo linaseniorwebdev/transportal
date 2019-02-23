@@ -8,22 +8,34 @@ class Auth extends Base {
 
 	function __construct() {
 		parent::__construct();
-		$this->user = $this->session->user;
 	}
 
 	public function index() {
-		if ($this->user == null)
-			redirect('/auth/login');
-
+		if ($this->login) {
+			if ($this->agent->is_referral())
+				echo $this->agent->referrer();
+			else
+				redirect('/');
+		} else
+			redirect('auth/login');
 	}
 
 	public function login() {
-		$this->load_header('Welcome to ...');
-		$this->load->view('auth/login');
-		$this->load_footer();
+		if ($this->post_exist()) {
+			$user = $this->input->post('username');
+			$pass = $this->input->post('password');
+
+		} else {
+			$this->load_header('Welcome to Our Distribution');
+			$this->load->view('auth/login');
+			$this->load_footer();
+		}
 	}
 
 	public function signup() {
+		// This function is intentionally blocked by Support
+		redirect('/');
+
 		$this->load_header('Sign up');
 		$this->load->view('auth/signup');
 		$this->load_footer();

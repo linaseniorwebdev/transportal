@@ -11,7 +11,13 @@ class Front extends Base {
 	}
 
 	public function index() {
-		echo 'This page is under construction.';
+		if ($this->login) {
+			if ($this->user->isAdmin()) redirect('admin');
+			if ($this->user->isManager()) redirect('manager');
+			if ($this->user->isConsumer()) redirect('consumer');
+		} else {
+			redirect('auth');
+		}
 	}
 
 }
