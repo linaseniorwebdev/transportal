@@ -14,7 +14,7 @@ class User {
 	public static function init(array $arr) {
 		$instance = new self();
 		$instance->id = $arr['id'];
-		$instance->name = $arr['name'];
+		$instance->name = $arr['username'];
 		$instance->email = $arr['email'];
 		$instance->status = $arr['status'];
 		$instance->role = $arr['role'];

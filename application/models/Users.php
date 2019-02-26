@@ -14,7 +14,7 @@ class Users extends CI_Model {
 
 	function get_all_users() {
 		$this->db->order_by('id', 'desc');
-		return $this->db->get_where('users', array('id >' => 1))->row_array();
+		return $this->db->get_where('users', array('id >' => 1))->result_array();
 	}
 
 	function add_user($params) {

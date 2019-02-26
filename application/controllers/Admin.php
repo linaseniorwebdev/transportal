@@ -11,7 +11,14 @@ class Admin extends Base {
 	}
 
 	public function index() {
-		echo 'Admin Page';
+		if ($this->login) {
+			$this->load_header('Admin Dashboard');
+			$this->load->view('admin/subheader');
+			$this->load->view('admin/index');
+			$this->load->view('admin/subfooter');
+			$this->load_footer();
+		} else
+			redirect('auth/login');
 	}
 
 }

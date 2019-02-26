@@ -1,3 +1,6 @@
+<?php
+require_once(APPPATH . 'core/ClientInfo.php');
+?>
 <!-- BEGIN:: Body -->
 <body class="m--skin- m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
 
@@ -16,16 +19,33 @@
 						<div class="m-login__forget-password">
 							<div class="m-login__head">
 								<h3 class="m-login__title">Forgotten Password?</h3>
-								<div class="m-login__desc">Enter your email to reset password</div>
+								<div class="m-login__desc">
+									<?php
+									if (isset($message))
+										echo $message;
+									else
+										echo 'Enter your email to reset password';
+									?>
+								</div>
 							</div>
-							<form class="m-login__form m-form" action="">
+							<?php
+							if (!isset($message)) {
+							?>
+							<form class="m-login__form m-form" action="<?php echo base_url() . $this->uri->uri_string(); ?>" method="post">
 								<div class="form-group m-form__group">
 									<input class="form-control m-input" type="text" placeholder="Email" name="email" autocomplete="off">
 								</div>
 								<div class="m-login__form-action">
-									<a href="javascript:;" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">Request</a>
+									<button type="submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">Request</button>
+									<input type="hidden" name="ip" value="<?php echo UserInfo::get_ip(); ?>" />
+									<input type="hidden" name="device" value="<?php echo UserInfo::get_device(); ?>" />
+									<input type="hidden" name="os" value="<?php echo UserInfo::get_os(); ?>" />
+									<input type="hidden" name="browser" value="<?php echo UserInfo::get_browser(); ?>" />
 								</div>
 							</form>
+							<?php
+							}
+							?>
 						</div>
 					</div>
 				</div>

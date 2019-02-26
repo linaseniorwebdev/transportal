@@ -46,4 +46,13 @@ class Base extends CI_Controller {
 			return true;
 		return false;
 	}
+
+	/**
+	 * Check if get data exist
+	 */
+	public function get_exist() {
+		if (isset($_GET) && count($_GET) > 0)
+			return true;
+		return false;
+	}
 }

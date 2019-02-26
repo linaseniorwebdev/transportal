@@ -17,12 +17,25 @@
 							<div class="m-login__head">
 								<h3 class="m-login__title">Welcome to Our Distribution</h3>
 							</div>
-							<form class="m-login__form m-form" action="<?php echo base_url() . $this->uri->uri_string(); ?>" method="post">
+							<form class="m-login__form m-form mt-5" action="<?php echo base_url() . $this->uri->uri_string(); ?>" method="post">
+								<span class="text-center mb-2" style="display: block; color: #E13300;">
+									<?php
+									if (!isset($data['reason']))
+										echo '';
+									else {
+										if ($data['reason'] == 'nonexist')
+											echo 'Unregistered user!';
+										else
+											echo 'Wrong password!';
+									}
+									?>
+
+								</span>
 								<div class="form-group m-form__group">
-									<input class="form-control m-input" type="text" placeholder="Username or Email" name="username" autocomplete="off">
+									<input class="form-control m-input" type="text" placeholder="Username or Email" name="username" autocomplete="off" value="<?php if (isset($data['username'])) echo $data['username']; ?>" />
 								</div>
 								<div class="form-group m-form__group">
-									<input class="form-control m-input m-login__form-input--last" type="password" placeholder="Password" name="password">
+									<input class="form-control m-input m-login__form-input--last" type="password" placeholder="Password" name="password" />
 								</div>
 								<div class="row m-login__form-sub">
 									<div class="col m--align-left">
@@ -36,6 +49,7 @@
 									</div>
 								</div>
 								<div class="m-login__form-action">
+									<input type="hidden" name="ipadress" value="<?php echo $_SERVER['REMOTE_ADDR']; ?>" />
 									<button class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air" type="submit">Sign In</button>
 								</div>
 							</form>
@@ -47,7 +61,7 @@
 						<span class="m-login__account-msg">
 							Don't have an account yet ?
 						</span>&nbsp;&nbsp;
-						<a href="<?php echo base_url(); ?>auth/signup" class="m-link m-link--focus m-login__account-link">Sign Up</a>
+						<a href="javascript:showInfo();" class="m-link m-link--focus m-login__account-link">Sign Up</a>
 					</div>
 				</div>
 			</div>
@@ -62,6 +76,26 @@
 		</div>
 	</div>
 </div>
+
+<div class="modal fade" id="modalInfo" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Contact Us</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				Contact us: +1-999-999-9999
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <!-- END:: Page -->
 <script>
 	$(document).ready(function() {
@@ -79,6 +113,10 @@
 			$("form").submit();
 		}
 	});
+
+	function showInfo() {
+		$("#modalInfo").modal("toggle");
+	}
 </script>
 </body>
 <!-- END:: Body -->
