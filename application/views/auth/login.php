@@ -25,8 +25,12 @@
 									else {
 										if ($data['reason'] == 'nonexist')
 											echo 'Unregistered user!';
-										else
+										elseif ($data['reason'] == 'password')
 											echo 'Wrong password!';
+										elseif ($data['reason'] == 'disabled')
+											echo 'Your account is currently disabled. Please contact administrator.';
+										else
+											echo 'You must activate your account. Check your mail inbox.';
 									}
 									?>
 

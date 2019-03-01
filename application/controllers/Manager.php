@@ -11,7 +11,14 @@ class Manager extends Base {
 	}
 
 	public function index() {
-		echo 'Manager Page';
+		if ($this->login) {
+
+		} else
+			redirect('auth/login');
 	}
 
+	public function first($token = null) {
+		if ($token == null)
+			redirect('manager');
+	}
 }

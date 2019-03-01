@@ -31,28 +31,11 @@ class Auth extends Base {
 			$this->load->model('Logs');
 			$data = $this->Users->get_by_name($user);
 			if ($data) {
-				if ($data['password'] == md5($pass)) {
-					$this->session->set_userdata('user', $data['id']);
-
-					$params = array('last_ip' => $__ip);
-					$this->Users->update_user($data['id'], $params);
-
-					$params = array('from_ip' => $__ip);
-					$params['user_id'] = $data['id'];
-					$params['type'] = '1';
-					$this->Logs->add_log($params);
-
-					redirect('front');
+				if ($data['status'] == 1) {
+					$messages['reason'] = 'inactive';
+				} elseif ($data['status'] == 3) {
+					$messages['reason'] = 'disabled';
 				} else {
-					$params = array('from_ip' => $__ip);
-					$params['user_id'] = $data['id'];
-					$params['type'] = '2';
-					$this->Logs->add_log($params);
-					$messages['reason'] = 'password';
-				}
-			} else {
-				$data = $this->Users->get_by_email($user);
-				if ($data) {
 					if ($data['password'] == md5($pass)) {
 						$this->session->set_userdata('user', $data['id']);
 
@@ -71,6 +54,35 @@ class Auth extends Base {
 						$params['type'] = '2';
 						$this->Logs->add_log($params);
 						$messages['reason'] = 'password';
+					}
+				}
+			} else {
+				$data = $this->Users->get_by_email($user);
+				if ($data) {
+					if ($data['status'] == 1) {
+						$messages['reason'] = 'inactive';
+					} elseif ($data['status'] == 3) {
+						$messages['reason'] = 'disabled';
+					} else {
+						if ($data['password'] == md5($pass)) {
+							$this->session->set_userdata('user', $data['id']);
+
+							$params = array('last_ip' => $__ip);
+							$this->Users->update_user($data['id'], $params);
+
+							$params = array('from_ip' => $__ip);
+							$params['user_id'] = $data['id'];
+							$params['type'] = '1';
+							$this->Logs->add_log($params);
+
+							redirect('front');
+						} else {
+							$params = array('from_ip' => $__ip);
+							$params['user_id'] = $data['id'];
+							$params['type'] = '2';
+							$this->Logs->add_log($params);
+							$messages['reason'] = 'password';
+						}
 					}
 				} else {
 					$messages['reason'] = 'nonexist';
