@@ -33,13 +33,14 @@ class Manager extends Base {
 			$params['firstname'] = $this->input->post('firstname');
 			$params['lastname'] = $this->input->post('lastname');
 			$params['last_ip'] = $this->input->post('ip');
+			$params['status'] = 2;
 
 			$this->Users->update_user($data['user_id'], $params);
 
 			$this->Tokens->delete_token($token);
 
 			$this->session->unset_userdata('user');
-			
+
 			echo base_url('manager');
 		} else {
 			$this->load->model('Tokens');

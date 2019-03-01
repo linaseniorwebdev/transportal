@@ -33,6 +33,7 @@ class Consumer extends Base {
 			$params['firstname'] = $this->input->post('firstname');
 			$params['lastname'] = $this->input->post('lastname');
 			$params['last_ip'] = $this->input->post('ip');
+			$params['status'] = 2;
 
 			$this->Users->update_user($data['user_id'], $params);
 
