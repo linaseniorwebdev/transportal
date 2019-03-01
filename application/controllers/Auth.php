@@ -220,4 +220,17 @@ class Auth extends Base {
 		$this->load->view('auth/reset', $messages);
 		$this->load_footer();
 	}
+
+	public function check() {
+		if ($this->post_exist()) {
+			$this->load->model('Users');
+			$name = $this->input->post('username');
+			$user = $this->Users->get_by_name($name);
+			if ($user)
+				echo 'false';
+			else
+				echo 'true';
+		} else
+			echo 'false';
+	}
 }

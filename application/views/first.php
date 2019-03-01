@@ -154,7 +154,7 @@
 														<div class="col-lg-6 m-form__group-sub">
 															<label class="form-control-label">* Username:</label>
 															<input type="text" name="username" class="form-control m-input" placeholder="" value="">
-															<span class="m-form__help">Your username to login to your dashboard</span>
+															<span class="m-form__help">Your username to login to your dashboard. Must be unique.</span>
 														</div>
 														<div class="col-lg-6 m-form__group-sub">
 															<label class="form-control-label">* Password:</label>
@@ -203,7 +203,7 @@
 																	<div class="form-group m-form__group m-form__group--sm row">
 																		<label class="col-xl-4 col-lg-4 col-form-label">Email:</label>
 																		<div class="col-xl-8 col-lg-8">
-																			<span class="m-form__control-static" id="email"></span>
+																			<span class="m-form__control-static" id="email"><?php echo $email; ?></span>
 																		</div>
 																	</div>
 																</div>
@@ -345,10 +345,11 @@
 					startStep: 1
 				})).on("beforeNext", function(r) {
 					!0 !== e.form() && r.stop()
+					// alert(r.getStep());
 				}), r.on("change", function(e) {
 					mUtil.scrollTop()
 				}), r.on("change", function(e) {
-					1 === e.getStep()
+					3 === e.getStep() && prepare()
 				}), e = i.validate({
 					ignore: ":hidden",
 					rules: {
@@ -364,7 +365,16 @@
 						},
 						username: {
 							required: !0,
-							minlength: 4
+							minlength: 4,
+							remote: {
+								url: "<?php echo base_url('auth/check'); ?>",
+								type: "post",
+								data: {
+									username: function() {
+										return $("input[name='username']").val();
+									}
+								}
+							}
 						},
 						password: {
 							required: !0,
@@ -390,19 +400,26 @@
 					submitHandler: function(e) {}
 				}), (n = i.find('[data-wizard-action="submit"]')).on("click", function(r) {
 					r.preventDefault(), e.form() && (mApp.progress(n), i.ajaxSubmit({
-						success: function() {
+						success: function(data) {
 							mApp.unprogress(n), swal({
 								title: "",
 								text: "The application has been successfully submitted!",
 								type: "success",
 								confirmButtonClass: "btn btn-secondary m-btn m-btn--wide"
-							})
+							}).then(function() {
+								location.href = data;
+							});
 						}
 					}))
 				})
 			}
 		}
 	}();
+
+	function prepare() {
+		$("#fullname").text($("input[name='firstname']").val() + ' ' + $("input[name='lastname']").val());
+		$("#username").text($("input[name='username']").val());
+	}
 
 	$(document).ready(function() {
 		WizardDemo.init();
