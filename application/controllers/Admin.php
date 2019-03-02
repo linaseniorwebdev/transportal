@@ -129,9 +129,11 @@ class Admin extends Base {
 			if ($command == null) {
 				redirect('admin/setting/security');
 			} elseif ($command == 'languages') {
+				$this->load->model('Languages');
+				$data = $this->Languages->get_all_languages();
 				$this->load_header('Langauges');
 				$this->load->view('admin/subheader', array('command' => 'setting', 'subcomm' => $command));
-				$this->load->view('admin/languages');
+				$this->load->view('admin/languages', array('langs' => $data));
 			} elseif ($command == 'medstatus') {
 				$this->load_header('Media Status');
 				$this->load->view('admin/subheader', array('command' => 'setting', 'subcomm' => $command));

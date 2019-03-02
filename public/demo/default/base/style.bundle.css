@@ -1927,7 +1927,7 @@ pre code {
 .table th,
 .table td {
 	padding: .75rem;
-	vertical-align: top;
+	/*vertical-align: top;*/
 	border-top: 1px solid #f4f5f8
 }
 
@@ -44425,7 +44425,7 @@ select.m-select2 {
 
 .dataTables_wrapper .child .dtr-details>li .dtr-title {
 	display: table-cell;
-	vertical-align: top;
+	vertical-align: middle;
 	border-bottom: 1px dashed #efefef;
 	font-weight: 500;
 	padding: 0.5rem 2rem 0.5rem 0
