@@ -1,10 +1,3 @@
-<link rel="stylesheet" href="public/vendors/custom/x-editable/css/bootstrap-editable.css" />
-<link rel="stylesheet" href="public/vendors/custom/x-editable/css/typeahead.js-bootstrap.css" />
-<script src="public/vendors/custom/x-editable/js/bootstrap-editable.js"></script>
-<script src="public/vendors/custom/x-editable/js/typeahead.js"></script>
-<script src="public/vendors/custom/x-editable/js/typeaheadjs.js"></script>
-<script src="public/vendors/custom/x-editable/js/address.js"></script>
-
 <link rel="stylesheet" href="public/vendors/custom/datatables/datatables.bundle.css" />
 <script src="public/vendors/custom/datatables/datatables.bundle.js"></script>
 <style>
@@ -69,7 +62,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form action="<?php base_url('api/language/update') ?>">
+				<form action="<?php echo base_url('api/language/update'); ?>" method="post" id="editform">
 					<input type="hidden" name="id" />
 					<div class="form-group m-form__group row">
 						<label class="col-3 col-form-label">Original:</label>
@@ -116,7 +109,7 @@
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary">Save changes</button>
+				<button type="button" class="btn btn-primary" id="modify">Save changes</button>
 			</div>
 		</div>
 	</div>
@@ -172,7 +165,6 @@
 
 	$(document).ready(function() {
 		DatatablesExtensionsResponsive.init();
-		$.fn.editable.defaults.mode = 'popup';
 	});
 
 	function showEdit(obj) {
@@ -199,4 +191,16 @@
 			ena.checked = true;
 		$("#edit").modal("toggle");
 	}
+
+	$("#modify").click(function() {
+		$("#editform").submit();
+	});
+
+	$(".m-switch span").click(function() {
+		var txt = $(this).get(0).previousElementSibling;
+		if (txt.value == 1)
+			$(txt).val(0);
+		else
+			$(txt).val(1);
+	});
 </script>

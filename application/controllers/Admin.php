@@ -135,9 +135,11 @@ class Admin extends Base {
 				$this->load->view('admin/subheader', array('command' => 'setting', 'subcomm' => $command));
 				$this->load->view('admin/languages', array('langs' => $data));
 			} elseif ($command == 'medstatus') {
+				$this->load->model('MStatus');
+				$data = $this->MStatus->get_all_status();
 				$this->load_header('Media Status');
 				$this->load->view('admin/subheader', array('command' => 'setting', 'subcomm' => $command));
-				$this->load->view('admin/media_status');
+				$this->load->view('admin/media_status', array('status' => $data));
 			} elseif ($command == 'security') {
 				$this->load_header('Account Security');
 				$this->load->view('admin/subheader', array('command' => 'setting', 'subcomm' => $command));

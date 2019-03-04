@@ -55,4 +55,11 @@ class Base extends CI_Controller {
 			return true;
 		return false;
 	}
+	
+	/**
+	 * Set output header as HTTP 400
+	 */
+	public function bad_request() {
+		$this->output->set_status_header('400', 'Bad Request');
+	}
 }
