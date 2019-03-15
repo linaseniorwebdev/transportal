@@ -6,6 +6,8 @@ class User {
 	private $email;		// Email Address
 	private $status;	// User Status
 	private $role;		// User Role
+	private $firstname;	// First Name
+	private $lastname;	// Last Name
 
 	function __construct() {
 		// Empty constructor
@@ -18,6 +20,8 @@ class User {
 		$instance->email = $arr['email'];
 		$instance->status = $arr['status'];
 		$instance->role = $arr['role'];
+		$instance->firstname = $arr['firstname'];
+		$instance->lastname = $arr['lastname'];
 		return $instance;
 	}
 
@@ -31,6 +35,14 @@ class User {
 
 	public function getEmail() {
 		return $this->email;
+	}
+
+	public function getFirstname() {
+		return $this->firstname;
+	}
+
+	public function getLastname() {
+		return $this->lastname;
 	}
 
 	public function isAdmin() {

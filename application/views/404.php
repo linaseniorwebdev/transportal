@@ -26,7 +26,7 @@
 	<link href="public/demo/default/base/style.bundle.css" rel="stylesheet" type="text/css" />
 	<!--END:: Global Theme Styles -->
 
-	<link rel="shortcut icon" href="assets/demo/default/media/img/logo/favicon.ico" />
+	<link rel="shortcut icon" href="public/demo/default/media/img/logo/favicon.png" />
 </head>
 <!-- end::Head -->
 

@@ -12,7 +12,63 @@ class Manager extends Base {
 
 	public function index() {
 		if ($this->login) {
+			$data = array(
+				'command' => 'index',
+				'email' => $this->user->getEmail(),
+				'firstname' => $this->user->getFirstname(),
+				'lastname' => $this->user->getLastname()
+			);
+			$this->load_header('Manager Dashboard');
+			$this->load->view('manager/subheader', $data);
+			$this->load->view('manager/index');
+			$this->load->view('manager/subfooter');
+			$this->load_footer();
+		} else
+			redirect('auth/login');
+	}
 
+	public function media($command = 'all') {
+		if ($this->login) {
+			$data = array(
+				'command' => 'media',
+				'subcomm' => $command,
+				'email' => $this->user->getEmail(),
+				'firstname' => $this->user->getFirstname(),
+				'lastname' => $this->user->getLastname()
+			);
+			if ($command == 'new') {
+				$this->load_header('Upload New Clip');
+				$this->load->view('manager/subheader', $data);
+				$this->load->view('manager/media_new');
+			} elseif ($command == 'all') {
+				$this->load_header('All My Clips');
+				$this->load->view('manager/subheader', $data);
+				$this->load->view('manager/media_all');
+			} else {
+				if ($this->agent->is_referral())
+					echo $this->agent->referrer();
+				else
+					redirect('/');
+			}
+			$this->load->view('manager/subfooter');
+			$this->load_footer();
+		} else
+			redirect('auth/login');
+	}
+
+	public function messages() {
+		if ($this->login) {
+			$data = array(
+				'command' => 'messages',
+				'email' => $this->user->getEmail(),
+				'firstname' => $this->user->getFirstname(),
+				'lastname' => $this->user->getLastname()
+			);
+			$this->load_header('Messages');
+			$this->load->view('manager/subheader', $data);
+			$this->load->view('manager/messages');
+			$this->load->view('manager/subfooter');
+			$this->load_footer();
 		} else
 			redirect('auth/login');
 	}

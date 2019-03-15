@@ -30,13 +30,14 @@
 						}
 					},
 					pageSize: 10,
-					saveState: !1,
-					serverPaging: !0,
-					serverFiltering: !0,
-					serverSorting: !0
+					saveState: false,
+					serverPaging: true,
+					serverFiltering: true,
+					serverSorting: true
 				},
-				sortable: !1,
-				pagination: !0,
+				sortable: false,
+				filterable: false,
+				pagination: true,
 				toolbar: {
 					items: {
 						pagination: {
