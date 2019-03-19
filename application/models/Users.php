@@ -4,10 +4,6 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class Users extends CI_Model {
 
-	function __construct() {
-		parent::__construct();
-	}
-
 	function get_table_fields() {
 		return $this->db->list_fields('users');
 	}
@@ -37,5 +33,10 @@ class Users extends CI_Model {
 
 	function get_by_email($mail) {
 		return $this->db->get_where('users', array('email' => $mail))->row_array();
+	}
+
+	function get_all_available_receipts() {
+		$this->db->order_by('id', 'asc');
+		return $this->db->get_where('users', array('role' => 3))->result_array();
 	}
 }

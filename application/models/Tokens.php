@@ -4,10 +4,6 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class Tokens extends CI_Model {
 
-	function __construct() {
-		parent::__construct();
-	}
-
 	function get_all_tokens() {
 		$this->db->order_by('id', 'desc');
 		return $this->db->get('tokens')->result_array();

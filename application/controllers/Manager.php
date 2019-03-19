@@ -37,6 +37,10 @@ class Manager extends Base {
 				'lastname' => $this->user->getLastname()
 			);
 			if ($command == 'new') {
+				$this->load->model('Languages');
+				$data['langs'] = $this->Languages->get_available_languages();
+				$this->load->model('Users');
+				$data['users'] = $this->Users->get_all_available_receipts();
 				$this->load_header('Upload New Clip');
 				$this->load->view('manager/subheader', $data);
 				$this->load->view('manager/media_new');
