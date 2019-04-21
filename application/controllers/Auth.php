@@ -2,22 +2,20 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require_once(APPPATH . 'controllers/Base.php');
+require_once APPPATH . 'controllers/Base.php';
 
 class Auth extends Base {
 
-	function __construct() {
-		parent::__construct();
-	}
-
 	public function index() {
 		if ($this->login) {
-			if ($this->agent->is_referral())
+			if ($this->agent->is_referral()) {
 				echo $this->agent->referrer();
-			else
+			} else {
 				redirect('/');
-		} else
+			}
+		} else {
 			redirect('auth/login');
+		}
 	}
 
 	public function login() {
@@ -146,8 +144,9 @@ class Auth extends Base {
 
 					$this->load->model('Logs');
 					$this->Logs->add_log($params);
-				} else
+				} else {
 					$messages['message'] = 'Currently unable to send confirmation mail. Please try again later.';
+				}
 			} else {
 				$data = array();
 				$data['appname'] = $this->config->item('name');
@@ -165,10 +164,11 @@ class Auth extends Base {
 				$this->email->subject('Set up a new password for ' . $this->config->item('name') . '?>');
 				$this->email->message($this->load->view('email/password_reset_help-html', $data, TRUE));
 				$this->email->set_alt_message($this->load->view('email/password_reset_help-txt', $data, TRUE));
-				if ($this->email->send())
+				if ($this->email->send()) {
 					$messages['message'] = 'Confirmation mail sent. Check your mail inbox.';
-				else
+				} else {
 					$messages['message'] = 'Currently unable to send confirmation mail. Please try again later.';
+				}
 			}
 		}
 		$this->load_header('Request to reset password');
@@ -191,8 +191,9 @@ class Auth extends Base {
 				if ($diff < 1) {
 					$messages['status'] = 'confirmed';
 					$messages['uid'] = $entity['user_id'];
-				} else
+				} else {
 					$messages['status'] = 'expired';
+				}
 				$this->Tokens->delete_token($token);
 				$messages['time'] = $entity['initiated_at'];
 			}
@@ -226,11 +227,13 @@ class Auth extends Base {
 			$this->load->model('Users');
 			$name = $this->input->post('username');
 			$user = $this->Users->get_by_name($name);
-			if ($user)
+			if ($user) {
 				echo 'false';
-			else
+			} else {
 				echo 'true';
-		} else
+			}
+		} else {
 			echo 'false';
+		}
 	}
 }

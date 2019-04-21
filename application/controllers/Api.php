@@ -2,11 +2,11 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require_once(APPPATH . 'controllers/Base.php');
+require_once APPPATH . 'controllers/Base.php';
 
 class Api extends Base {
 
-	function __construct() {
+	public function __construct() {
 		parent::__construct();
 		$this->load->model('Languages');
 	}
@@ -109,6 +109,7 @@ class Api extends Base {
 					break;
 				case 'save':
 					$this->load->model('Videos');
+					$this->load->model('TStatus');
 					$params = array(
 						'resource_hash' => $this->input->post('hash'),
 						'origin' => $this->input->post('origin'),
@@ -117,12 +118,23 @@ class Api extends Base {
 						'consumers_to' => $this->input->post('consumers_to')
 					);
 					$title = $this->input->post('title');
-					if ($title)
+					if ($title) {
 						$params['title'] = $title;
+					}
 					$description = $this->input->post('description');
-					if ($description)
+					if ($description) {
 						$params['description'] = $description;
-					$this->Videos->add_video($params);
+					}
+					$video = $this->Videos->add_video($params);
+					$arr = explode(',', $this->input->post('languages_into'));
+					foreach ($arr as $i) {
+						$lang = substr($i, 1, -1);
+						$params = array(
+							'video_id' => $video,
+							'language_id' => $lang
+						);
+						$this->TStatus->add_status($params);
+					}
 					$result['status'] = 'success';
 					break;
 				default:

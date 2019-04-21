@@ -2,13 +2,9 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require_once(APPPATH . 'controllers/Base.php');
+require_once APPPATH . 'controllers/Base.php';
 
 class Manager extends Base {
-
-	function __construct() {
-		parent::__construct();
-	}
 
 	public function index() {
 		if ($this->login) {
@@ -23,8 +19,9 @@ class Manager extends Base {
 			$this->load->view('manager/index');
 			$this->load->view('manager/subfooter');
 			$this->load_footer();
-		} else
+		} else {
 			redirect('auth/login');
+		}
 	}
 
 	public function media($command = 'all') {
@@ -36,7 +33,7 @@ class Manager extends Base {
 				'firstname' => $this->user->getFirstname(),
 				'lastname' => $this->user->getLastname()
 			);
-			if ($command == 'new') {
+			if ($command === 'new') {
 				$this->load->model('Languages');
 				$data['langs'] = $this->Languages->get_available_languages();
 				$this->load->model('Users');
@@ -44,20 +41,22 @@ class Manager extends Base {
 				$this->load_header('Upload New Clip');
 				$this->load->view('manager/subheader', $data);
 				$this->load->view('manager/media_new');
-			} elseif ($command == 'all') {
+			} elseif ($command === 'all') {
 				$this->load_header('All My Clips');
 				$this->load->view('manager/subheader', $data);
 				$this->load->view('manager/media_all');
 			} else {
-				if ($this->agent->is_referral())
+				if ($this->agent->is_referral()) {
 					echo $this->agent->referrer();
-				else
+				} else {
 					redirect('/');
+				}
 			}
 			$this->load->view('manager/subfooter');
 			$this->load_footer();
-		} else
+		} else {
 			redirect('auth/login');
+		}
 	}
 
 	public function messages() {
@@ -73,13 +72,15 @@ class Manager extends Base {
 			$this->load->view('manager/messages');
 			$this->load->view('manager/subfooter');
 			$this->load_footer();
-		} else
+		} else {
 			redirect('auth/login');
+		}
 	}
 
 	public function first($token = null) {
-		if ($token == null)
+		if ($token === null) {
 			redirect('manager');
+		}
 
 		if ($this->post_exist()) {
 			$this->load->model('Users');

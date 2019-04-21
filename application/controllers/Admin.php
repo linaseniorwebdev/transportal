@@ -2,13 +2,9 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require_once(APPPATH . 'controllers/Base.php');
+require_once APPPATH . 'controllers/Base.php';
 
 class Admin extends Base {
-
-	function __construct() {
-		parent::__construct();
-	}
 
 	public function index() {
 		if ($this->login) {
@@ -17,8 +13,9 @@ class Admin extends Base {
 			$this->load->view('admin/index');
 			$this->load->view('admin/subfooter');
 			$this->load_footer();
-		} else
+		} else {
 			redirect('auth/login');
+		}
 	}
 
 	public function user($command = null) {
@@ -54,10 +51,11 @@ class Admin extends Base {
 						$params = array('token' => $token, 'user_id' => $id);
 						$this->Tokens->add_token($params);
 
-						if ($role == 1)
+						if ($role == 1) {
 							$action = base_url() . 'manager/first/' . $token;
-						else
+						} else {
 							$action = base_url() . 'consumer/first/' . $token;
+						}
 
 						if ($this->invite($email, $action)) {
 							$message = 'Invitation sent. Please wait for their action.';
@@ -67,17 +65,19 @@ class Admin extends Base {
 					}
 
 					$this->load->view('admin/user_new', array('message' => $message));
-				} else
+				} else {
 					$this->load->view('admin/user_new');
+				}
 			} elseif ($command == 'all') {
 				$this->load_header('All Users');
 				$this->load->view('admin/subheader', array('command' => 'user', 'subcomm' => $command));
 				$this->load->view('admin/user_all');
 			} else {
-				if ($this->agent->is_referral())
+				if ($this->agent->is_referral()) {
 					echo $this->agent->referrer();
-				else
+				} else {
 					redirect('/');
+				}
 			}
 			$this->load->view('admin/subfooter');
 			$this->load_footer();
@@ -92,8 +92,9 @@ class Admin extends Base {
 			$this->load->view('admin/media');
 			$this->load->view('admin/subfooter');
 			$this->load_footer();
-		} else
+		} else {
 			redirect('auth/login');
+		}
 	}
 
 	public function status($command = null) {
@@ -113,15 +114,17 @@ class Admin extends Base {
 				$this->load->view('admin/subheader', array('command' => 'status', 'subcomm' => $command));
 				$this->load->view('admin/status_customer');
 			} else {
-				if ($this->agent->is_referral())
+				if ($this->agent->is_referral()) {
 					echo $this->agent->referrer();
-				else
+				} else {
 					redirect('/');
+				}
 			}
 			$this->load->view('admin/subfooter');
 			$this->load_footer();
-		} else
+		} else {
 			redirect('auth/login');
+		}
 	}
 
 	public function setting($command = null) {
@@ -145,20 +148,21 @@ class Admin extends Base {
 				$this->load->view('admin/subheader', array('command' => 'setting', 'subcomm' => $command));
 				$this->load->view('admin/security');
 			} else {
-				if ($this->agent->is_referral())
+				if ($this->agent->is_referral()) {
 					echo $this->agent->referrer();
-				else
+				} else {
 					redirect('/');
+				}
 			}
 			$this->load->view('admin/subfooter');
 			$this->load_footer();
-		} else
+		} else {
 			redirect('auth/login');
+		}
 	}
 
 	private function invite($email, $action) {
 		$this->config->load('app');
-		$this->load->model('Users');
 
 		$data = array();
 		$data['appname'] = $this->config->item('name');
@@ -176,7 +180,7 @@ class Admin extends Base {
 		$this->email->message($this->load->view('email/user_invitation-html', $data, TRUE));
 		$this->email->set_alt_message($this->load->view('email/user_invitation-txt', $data, TRUE));
 
-		return ($this->email->send());
+		return $this->email->send();
 	}
 
 	public function users() {
@@ -204,7 +208,6 @@ class Admin extends Base {
 		$sort  = ! empty($datatable['sort']['sort']) ? $datatable['sort']['sort'] : 'asc';
 		$field = ! empty($datatable['sort']['field']) ? $datatable['sort']['field'] : 'ID';
 
-		$meta    = array();
 		$page    = ! empty($datatable['pagination']['page']) ? (int)$datatable['pagination']['page'] : 1;
 		$perpage = ! empty($datatable['pagination']['perpage']) ? (int)$datatable['pagination']['perpage'] : -1;
 

@@ -1,3 +1,2 @@
 /.idea
-*.clpprj
-*.csprj
+/uploads/*

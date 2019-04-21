@@ -226,8 +226,15 @@
 						},
 						function(data) {
 							data = JSON.parse(data);
-							if (data.success == "success")
-								swal("Viola!", "Pleases select users that can receive this media.", "warning");
+							if (data.status == "success")
+								swal({
+									title: "Viola!",
+									text: "Media upload successful!",
+									type: "success",
+									confirmButtonText: "Yeah, I know"
+								}).then(function(e) {
+									location.reload();
+								});
 							$(btn).removeClass("m-loader");
 							$(btn).removeClass("m-loader--light");
 							$(btn).removeClass("m-loader--right");

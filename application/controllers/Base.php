@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require_once(APPPATH . 'core/User.php');
+require_once APPPATH . 'core/User.php';
 
 class Base extends CI_Controller {
 
@@ -11,7 +11,7 @@ class Base extends CI_Controller {
 	/**
 	 * Default constructor
 	 */
-	function __construct() {
+	public function __construct() {
 		parent::__construct();
 		if ($this->session->user) {
 			$this->load->model('Users');
@@ -26,6 +26,7 @@ class Base extends CI_Controller {
 
 	/**
 	 * Load header file, with title
+	 * @param $title
 	 */
 	public function load_header($title) {
 		$this->load->view('header', array('title' => $title));
@@ -42,18 +43,14 @@ class Base extends CI_Controller {
 	 * Check if post data exist
 	 */
 	public function post_exist() {
-		if (isset($_POST) && count($_POST) > 0)
-			return true;
-		return false;
+		return isset($_POST) && count($_POST) > 0;
 	}
 
 	/**
 	 * Check if get data exist
 	 */
 	public function get_exist() {
-		if (isset($_GET) && count($_GET) > 0)
-			return true;
-		return false;
+		return isset($_GET) && count($_GET) > 0;
 	}
 	
 	/**

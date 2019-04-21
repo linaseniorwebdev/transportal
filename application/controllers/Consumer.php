@@ -6,20 +6,18 @@ require_once(APPPATH . 'controllers/Base.php');
 
 class Consumer extends Base {
 
-	function __construct() {
-		parent::__construct();
-	}
-
 	public function index() {
 		if ($this->login) {
 
-		} else
+		} else {
 			redirect('auth/login');
+		}
 	}
 
 	public function first($token = null) {
-		if ($token == null)
+		if ($token === null) {
 			redirect('consumer');
+		}
 
 		if ($this->post_exist()) {
 			$this->load->model('Users');

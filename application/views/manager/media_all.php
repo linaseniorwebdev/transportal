@@ -10,12 +10,8 @@
 	<!-- END: Subheader -->
 
 	<div class="m-content">
-		<!--Begin::Section-->
-		<div class="row">
-			<div class="col-xl-12">
+		<!-- Begin::Media Section -->
 
-			</div>
-		</div>
-		<!--End::Section-->
+		<!-- End::Media Section -->
 	</div>
 </div>
